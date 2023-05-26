@@ -3,8 +3,7 @@ package com.example.StudentList.controller;
 import com.example.StudentList.dto.StudentDto;
 import com.example.StudentList.model.Student;
 import com.example.StudentList.service.StudentService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +27,17 @@ public class StudentController {
     }
 
     @ApiOperation(value = "Get student", notes = "Get student by entered ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "SUCCESSFULLY"),
+            @ApiResponse(code = 404, message = "NOT FOUND")
+    })
     @GetMapping("/get/{id}")
     @ResponseBody
     public ResponseEntity<StudentDto> getStudent(@PathVariable("id") @ApiParam(name = "id", value = "Student ID", example = "1") Long id) {
         return new ResponseEntity<>(studentService.getById(id), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Get students",notes = "Getting all saved students from DB")
+    @ApiOperation(value = "Get students", notes = "Getting all saved students from DB")
     @GetMapping("/students")
     @ResponseBody
     public List<StudentDto> getAllStudents() {
@@ -42,9 +45,13 @@ public class StudentController {
     }
 
     @ApiOperation(value = "Update by ID", notes = "Update student by entered ID ")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "SUCCESSFULLY"),
+            @ApiResponse(code = 404, message = "NOT FOUND")
+    })
     @PutMapping("/update/{id}")
-    public int update(@RequestBody StudentDto student, @PathVariable @ApiParam(name = "Student ID", example = "1") Long id) {
-        return  studentService.update(student, id);
+    public int update(@RequestBody StudentDto student, @PathVariable @ApiParam(name = "id", value = "Student ID", example = "1") Long id) {
+        return studentService.update(student, id);
     }
 
     @ApiOperation(value = "Delete by ID", notes = "Delete student by entered ID")
