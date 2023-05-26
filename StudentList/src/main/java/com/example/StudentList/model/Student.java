@@ -6,11 +6,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {
-    private long ID;
-    private int class_no;
+
+    private Long ID;
+    private Integer class_no;
     private String name;
     private String surname;
-    private int age;
+    private Integer age;
     private String address;
     private String language;
     private String FIN;
