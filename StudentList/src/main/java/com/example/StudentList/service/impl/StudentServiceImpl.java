@@ -60,7 +60,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public int update(StudentDto studentDto, Long id) {
         try {
-            getById(id);
+            if (getById(id) == null)
+                throw new RuntimeException();
             log.info("Updating {} id student", id);
             int response = studentRepository.updateById(studentMapper.convertToStudent(studentDto), id);
             log.info("{} id student is updated", id);
