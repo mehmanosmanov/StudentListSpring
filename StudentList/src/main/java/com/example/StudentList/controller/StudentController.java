@@ -1,17 +1,18 @@
 package com.example.StudentList.controller;
 
-import com.example.StudentList.dto.StudentDto;
-import com.example.StudentList.model.Student;
+import com.example.StudentList.dto.request.StudentRequest;
+import com.example.StudentList.dto.response.StudentResponse;
 import com.example.StudentList.service.StudentService;
-import io.swagger.annotations.*;
-import lombok.extern.slf4j.Slf4j;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/student")
@@ -21,9 +22,8 @@ public class StudentController {
 
     @ApiOperation(value = "Add student", notes = "Adding a new student to the DB.")
     @PostMapping("/create")
-    public String create(@RequestBody StudentDto dto) {
-        studentService.saveStudent(dto);
-        return "Student added";
+    public String create(@RequestBody StudentRequest dto) {
+        return studentService.saveStudent(dto);
     }
 
     @ApiOperation(value = "Get student", notes = "Get student by entered ID")
@@ -32,15 +32,17 @@ public class StudentController {
             @ApiResponse(code = 404, message = "NOT FOUND")
     })
     @GetMapping("/get/{id}")
-    @ResponseBody
-    public ResponseEntity<StudentDto> getStudent(@PathVariable("id") @ApiParam(name = "id", value = "Student ID", example = "1") Long id) {
+    public ResponseEntity<StudentResponse> getStudent(@ApiParam(name = "id", value = "Student ID", example = "1") @PathVariable Long id) {
         return new ResponseEntity<>(studentService.getById(id), HttpStatus.OK);
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "SUCCESSFULLY"),
+            @ApiResponse(code = 404, message = "NOT FOUND")
+    })
     @ApiOperation(value = "Get students", notes = "Getting all saved students from DB")
     @GetMapping("/students")
-    @ResponseBody
-    public List<StudentDto> getAllStudents() {
+    public List<StudentResponse> getAllStudents() {
         return studentService.getAll();
     }
 
@@ -50,13 +52,13 @@ public class StudentController {
             @ApiResponse(code = 404, message = "NOT FOUND")
     })
     @PutMapping("/update/{id}")
-    public int update(@RequestBody StudentDto student, @PathVariable @ApiParam(name = "id", value = "Student ID", example = "1") Long id) {
-        return studentService.update(student, id);
+    public String update(@RequestBody StudentRequest studentRequest, @ApiParam(name = "id", value = "Student ID", example = "1") @PathVariable Long id) {
+        return studentService.update(studentRequest, id);
     }
 
     @ApiOperation(value = "Delete by ID", notes = "Delete student by entered ID")
     @DeleteMapping("/delete/{id}")
-    public int remove(@PathVariable("id") @ApiParam(name = "id", value = "Student ID", example = "1") Long id) {
+    public String remove(@ApiParam(name = "id", value = "Student ID", example = "1") @PathVariable Long id) {
         return studentService.deleteById(id);
     }
 

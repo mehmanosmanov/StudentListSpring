@@ -1,6 +1,7 @@
 package com.example.StudentList.mapper;
 
-import com.example.StudentList.dto.StudentDto;
+import com.example.StudentList.dto.request.StudentRequest;
+import com.example.StudentList.dto.response.StudentResponse;
 import com.example.StudentList.model.Student;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -15,27 +16,27 @@ public class StudentMapper implements RowMapper<Student> {
         if (rs.next()) return null;
         Student student = Student.builder()
                 .ID(rs.getLong("id"))
-                .FIN(rs.getString("fin"))
-                .address(rs.getString("address"))
                 .age(rs.getInt("age"))
-                .class_no(rs.getInt("class_no"))
-                .language(rs.getString("language"))
-                .name(rs.getString("name"))
-                .surname(rs.getString("surname")).build();
-
+                .class_no(rs.getString("class_no"))
+                .name(rs.getString("first_name"))
+                .surname(rs.getString("last_name")).build();
         return student;
     }
 
-    public Student convertToStudent(StudentDto studentDto) {
+    public Student convertToStudent(StudentRequest studentRequest) {
         return Student.builder()
-                .name(studentDto.getName())
-                .surname(studentDto.getSurname())
-                .age(studentDto.getAge()).build();
+                .ID(studentRequest.getID())
+                .name(studentRequest.getName())
+                .surname(studentRequest.getSurname())
+                .class_no(studentRequest.getClass_no())
+                .age(studentRequest.getAge()).build();
+
     }
 
-    public StudentDto convertToStudentDto(Student student) {
-        return StudentDto.builder()
+    public StudentResponse convertToStudentDto(Student student) {
+        return StudentResponse.builder()
                 .name(student.getName())
+                .class_no(student.getClass_no())
                 .surname(student.getSurname())
                 .age(student.getAge()).build();
     }

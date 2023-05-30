@@ -1,18 +1,21 @@
 package com.example.StudentList.service.impl;
 
-import com.example.StudentList.dto.StudentDto;
+import com.example.StudentList.dto.request.StudentRequest;
+import com.example.StudentList.dto.response.StudentResponse;
+import com.example.StudentList.exception.AgeLimitException;
+import com.example.StudentList.exception.NotFoundException;
+import com.example.StudentList.exception.StudentAlreadyExistsException;
 import com.example.StudentList.mapper.StudentMapper;
 import com.example.StudentList.model.Student;
+import com.example.StudentList.repository.DemoRepository;
 import com.example.StudentList.repository.StudentRepository;
 import com.example.StudentList.service.StudentService;
 import lombok.RequiredArgsConstructor;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -21,62 +24,64 @@ import java.util.stream.Collectors;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final DemoRepository demoRepository;
     private final StudentMapper studentMapper;
 
     @Override
-    public void saveStudent(StudentDto dto) {
+    public String saveStudent(StudentRequest request) {
         log.info("Starting to save a new student");
-        Student student = studentMapper.convertToStudent(dto);
-        studentRepository.insert(student);
-        log.info("New student saved {}", dto);
+        if (request.getAge() < 16) throw new AgeLimitException();
+        if (studentRepository.findById(request.getID()).orElse(null) != null)
+            throw new StudentAlreadyExistsException("Student already exists with id=" + request.getID());
+        Student student = studentMapper.convertToStudent(request);
+        studentRepository.save(student);
+        log.info("New student saved {}", request);
+        return "Student saved successfully";
     }
 
     @Override
-    public List<StudentDto> getAll() {
+    public List<StudentResponse> getAll() {
         log.info("Start to get all possible students");
-        List<StudentDto> studentDtos = new ArrayList<>();
+        List<StudentResponse> studentResponses = new ArrayList<>();
         for (Student student : studentRepository.findAll()) {
-            studentDtos.add(studentMapper.convertToStudentDto(student));
+            studentResponses.add(studentMapper.convertToStudentDto(student));
         }
-        if (studentDtos.isEmpty())
+        if (studentResponses.isEmpty())
             log.warn("Student list is empty");
         log.info("All students are fetched");
-        return studentDtos;
+        return studentResponses;
     }
 
     @Override
-    public StudentDto getById(Long id) {
-        try {
-            log.info("Checking of {} id student", id);
-            Student student = studentRepository.findById(id);
-            log.info("{} id student found", id);
-            return studentMapper.convertToStudentDto(student);
-        } catch (RuntimeException re) {
+    public StudentResponse getById(Long id) {
+        log.info("Checking of {} id student", id);
+        Student student = studentRepository.findById(id).orElse(null);
+        if (student == null) {
             log.warn("There is no {} id student", id);
-            return null;
-        }
+            throw new NotFoundException("Not found student such id=" + id);
+        } else log.info("{} id student found", id);
+        return studentMapper.convertToStudentDto(student);
     }
 
     @Override
-    public int update(StudentDto studentDto, Long id) {
-        try {
-            if (getById(id) == null)
-                throw new RuntimeException();
-            log.info("Updating {} id student", id);
-            int response = studentRepository.updateById(studentMapper.convertToStudent(studentDto), id);
-            log.info("{} id student is updated", id);
-            return response;
-        } catch (RuntimeException re) {
+    public String update(StudentRequest studentRequest, Long id) {
+        if (getById(id) == null) {
             log.error("Couldn't find student id={}", id);
-            return 0;
-        }
+            throw new NotFoundException("Not found student such id=" + id);
+        } else log.info("Updating {} id student", id);
+        demoRepository.updateById(studentMapper.convertToStudent(studentRequest), id);
+        log.info("{} id student is updated", id);
+        return "Student id=" + id + " successfully updated ";
     }
 
     @Override
-    public int deleteById(Long id) {
-        log.info("Starting to delete {} id student", id);
-        int response = studentRepository.deleteById(id);
+    public String deleteById(Long id) {
+        if (getById(id) == null) {
+            log.error("There is not a student such id " + id);
+            throw new NotFoundException("Not found student such id" + id);
+        } else log.info("Starting to delete {} id student", id);
+        studentRepository.deleteById(id);
         log.info("{} id student is deleted", id);
-        return response;
+        return "Student id=" + id + " is successfully deleted";
     }
 }

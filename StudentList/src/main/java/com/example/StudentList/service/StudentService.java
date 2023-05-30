@@ -1,6 +1,7 @@
 package com.example.StudentList.service;
 
-import com.example.StudentList.dto.StudentDto;
+import com.example.StudentList.dto.request.StudentRequest;
+import com.example.StudentList.dto.response.StudentResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,15 +9,15 @@ import java.util.List;
 @Service
 public interface StudentService {
 
-    void saveStudent(StudentDto dto);
+    String saveStudent(StudentRequest studentRequest);
 
-    StudentDto getById(Long id);
+    StudentResponse getById(Long id);
 
-    List<StudentDto> getAll();
+    List<StudentResponse> getAll();
 
-    int update(StudentDto studentDto, Long id);
+    String update(StudentRequest studentRequest, Long id);
 
-    int deleteById(Long id);
+    String deleteById(Long id);
 
 
 }
