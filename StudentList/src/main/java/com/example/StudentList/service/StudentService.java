@@ -9,13 +9,13 @@ import java.util.List;
 @Service
 public interface StudentService {
 
-    String saveStudent(StudentRequest studentRequest,String fileName);
+    String saveStudent(StudentRequest studentRequest, String fileName);
 
     StudentResponse getById(Long id);
 
     List<StudentResponse> getAll();
 
-    String update(StudentRequest studentRequest, Long id);
+    String update(StudentRequest studentRequest, Long id, String image);
 
     String deleteById(Long id);
 

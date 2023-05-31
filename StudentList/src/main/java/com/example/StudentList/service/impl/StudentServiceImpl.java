@@ -31,11 +31,11 @@ public class StudentServiceImpl implements StudentService {
     private final IDChecker idChecker;
 
     @Override
-    public String saveStudent(StudentRequest request, String filName) {
+    public String saveStudent(StudentRequest request, String image) {
         log.info("Starting to save a new student");
         if (request.getAge() < 16) throw new AgeLimitException();
         idChecker.check(request.getID());
-        Student student = studentMapper.convertToStudent(request);
+        Student student = studentMapper.convertToStudent(request, image);
         studentRepository.save(student);
         log.info("New student saved {}", request);
         return "Student saved successfully";
@@ -63,10 +63,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public String update(StudentRequest studentRequest, Long id) {
+    public String update(StudentRequest studentRequest, Long id, String image) {
         idChecker.check(id);
         log.info("Updating {} id student", id);
-        demoRepository.updateById(studentMapper.convertToStudent(studentRequest), id);
+        demoRepository.updateById(studentMapper.convertToStudent(studentRequest, image), id);
         log.info("{} id student is updated", id);
         return "Student id=" + id + " successfully updated ";
     }

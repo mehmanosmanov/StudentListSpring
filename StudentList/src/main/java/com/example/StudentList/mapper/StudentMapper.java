@@ -23,8 +23,9 @@ public class StudentMapper implements RowMapper<Student> {
         return student;
     }
 
-    public Student convertToStudent(StudentRequest studentRequest) {
+    public Student convertToStudent(StudentRequest studentRequest, String image) {
         return Student.builder()
+                .image(image)
                 .ID(studentRequest.getID())
                 .name(studentRequest.getName())
                 .surname(studentRequest.getSurname())

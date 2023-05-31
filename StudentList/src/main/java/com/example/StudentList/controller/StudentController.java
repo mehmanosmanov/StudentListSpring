@@ -41,7 +41,7 @@ public class StudentController {
     @ApiOperation(value = "Add student", notes = "Adding a new student to the DB.")
     @PostMapping("/create")
     public String create(@RequestParam MultipartFile file, StudentRequest dto) {
-        return studentService.saveStudent(dto,file.getOriginalFilename());
+        return studentService.saveStudent(dto, file.getOriginalFilename());
 
 
     }
@@ -72,8 +72,8 @@ public class StudentController {
             @ApiResponse(code = 404, message = "NOT FOUND")
     })
     @PutMapping("/update/{id}")
-    public String update(@RequestBody StudentRequest studentRequest, @ApiParam(name = "id", value = "Student ID", example = "1") @PathVariable Long id) {
-        return studentService.update(studentRequest, id);
+    public String update(@RequestParam MultipartFile file, StudentRequest studentRequest, @ApiParam(name = "id", value = "Student ID", example = "1") @PathVariable Long id) {
+        return studentService.update(studentRequest, id, file.getOriginalFilename());
     }
 
     @ApiOperation(value = "Delete by ID", notes = "Delete student by entered ID")
