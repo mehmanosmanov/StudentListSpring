@@ -24,6 +24,7 @@ public class Student {
     @Column(name = "last_name", length = 55)
     private String surname;
     private Integer age;
+    private String image;
 }
 
 

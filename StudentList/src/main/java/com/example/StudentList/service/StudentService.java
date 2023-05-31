@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface StudentService {
 
-    String saveStudent(StudentRequest studentRequest);
+    String saveStudent(StudentRequest studentRequest,String fileName);
 
     StudentResponse getById(Long id);
 

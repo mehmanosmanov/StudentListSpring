@@ -14,11 +14,12 @@ public class IDChecker {
 
     private final StudentRepository studentRepository;
 
-    public void check(Long id) {
+    public Student check(Long id) {
         Student student = studentRepository.findById(id).orElse(null);
         if (student == null) {
             log.warn("There is not with id={} student", id);
             throw new NotFoundException("Not found student such id=" + id);
         }
+        return student;
     }
 }

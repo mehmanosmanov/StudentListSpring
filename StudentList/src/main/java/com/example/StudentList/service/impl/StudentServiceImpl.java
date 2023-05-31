@@ -10,9 +10,11 @@ import com.example.StudentList.model.Student;
 import com.example.StudentList.repository.DemoRepository;
 import com.example.StudentList.repository.StudentRepository;
 import com.example.StudentList.service.StudentService;
+import com.example.StudentList.validator.IDChecker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +28,13 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final DemoRepository demoRepository;
     private final StudentMapper studentMapper;
+    private final IDChecker idChecker;
 
     @Override
-    public String saveStudent(StudentRequest request) {
+    public String saveStudent(StudentRequest request, String filName) {
         log.info("Starting to save a new student");
         if (request.getAge() < 16) throw new AgeLimitException();
-        if (studentRepository.findById(request.getID()).orElse(null) != null)
-            throw new StudentAlreadyExistsException("Student already exists with id=" + request.getID());
+        idChecker.check(request.getID());
         Student student = studentMapper.convertToStudent(request);
         studentRepository.save(student);
         log.info("New student saved {}", request);
@@ -55,20 +57,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentResponse getById(Long id) {
         log.info("Checking of {} id student", id);
-        Student student = studentRepository.findById(id).orElse(null);
-        if (student == null) {
-            log.warn("There is no {} id student", id);
-            throw new NotFoundException("Not found student such id=" + id);
-        } else log.info("{} id student found", id);
+        Student student = idChecker.check(id);
+        log.info("{} id student found", id);
         return studentMapper.convertToStudentDto(student);
     }
 
     @Override
     public String update(StudentRequest studentRequest, Long id) {
-        if (getById(id) == null) {
-            log.error("Couldn't find student id={}", id);
-            throw new NotFoundException("Not found student such id=" + id);
-        } else log.info("Updating {} id student", id);
+        idChecker.check(id);
+        log.info("Updating {} id student", id);
         demoRepository.updateById(studentMapper.convertToStudent(studentRequest), id);
         log.info("{} id student is updated", id);
         return "Student id=" + id + " successfully updated ";
@@ -76,10 +73,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public String deleteById(Long id) {
-        if (getById(id) == null) {
-            log.error("There is not a student such id " + id);
-            throw new NotFoundException("Not found student such id" + id);
-        } else log.info("Starting to delete {} id student", id);
+        idChecker.check(id);
+        log.info("Starting to delete {} id student", id);
         studentRepository.deleteById(id);
         log.info("{} id student is deleted", id);
         return "Student id=" + id + " is successfully deleted";
