@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentRequest {
-    @ApiModelProperty(notes = "ID", example = "123", required = true)
-    private Long ID;
+//    @ApiModelProperty(notes = "ID", example = "123", required = true)
+//    private Long ID;
     @ApiModelProperty(notes = "Class number", example = "123ABC", required = true)
     private String class_no;
     @ApiModelProperty(notes = "Student name", example = "James", required = true)
@@ -21,4 +21,5 @@ public class StudentRequest {
     private String surname;
     @ApiModelProperty(notes = "Student age", example = "18", required = true)
     private Integer age;
+
 }

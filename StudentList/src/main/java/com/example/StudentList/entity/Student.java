@@ -1,4 +1,4 @@
-package com.example.StudentList.model;
+package com.example.StudentList.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "students")
 public class Student {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
     @Column(length = 10)
     private String class_no;
