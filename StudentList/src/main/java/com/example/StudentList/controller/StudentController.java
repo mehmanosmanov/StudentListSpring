@@ -3,6 +3,7 @@ package com.example.StudentList.controller;
 import com.example.StudentList.dto.request.StudentRequest;
 import com.example.StudentList.dto.response.StudentResponse;
 import com.example.StudentList.service.StudentServiceImpl;
+import com.example.StudentList.util.FileUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -10,12 +11,16 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -25,10 +30,13 @@ import java.util.List;
 public class StudentController {
     //    private final StudentService studentService;
     private final StudentServiceImpl studentService;
+    private final FileUtil fileUtil;
+    private final Path upPath = Paths.get("/media/mehman/C0C01276C0127340/JAVA/project_files/upload_from/");
+    private final Path downPath = Paths.get("/media/mehman/C0C01276C0127340/JAVA/project_files/download_to/");
 
     @ApiOperation(value = "Add student", notes = "Adding a new student to the DB.")
     @PostMapping("/create")
-    public String create(@RequestParam MultipartFile file, StudentRequest dto) throws IOException {
+    public String create( StudentRequest dto,@RequestParam MultipartFile file) throws IOException {
         return studentService.saveStudent(dto, file);
     }
 
@@ -69,23 +77,22 @@ public class StudentController {
     }
 
     @GetMapping("/image")
-    public ResponseEntity<Resource> getImage( @RequestParam Long id) {
-        return studentService.getStudentImage( id);
+    public ResponseEntity<Resource> getImage(@RequestParam Long id) {
+        return studentService.getStudentImage(id);
     }
-//    @PostMapping("/upload")
-//    public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-//        log.info("size:{}", file.getSize());
-//        log.info("File name:{}", file.getOriginalFilename());
-//        file.transferTo(path);
-//        Files.copy(file.getInputStream(), this.path.resolve(file.getOriginalFilename()));
+
+        @PostMapping("/upload")
+    public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+        log.info("size:{}", file.getSize());
+        log.info("File name:{}", file.getOriginalFilename());
+            Files.copy(file.getInputStream(), this.upPath.resolve(file.getOriginalFilename()));
+    }
 //
-//    }
-//
-//    @GetMapping("/download")
-//    public ResponseEntity<Resource> download(@RequestParam String fileName) {
-//        Resource resource = fileUtil.load(fileName, this.path);
-//        return ResponseEntity.ok()
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
-//                .body(resource);
-//    }
+    @GetMapping("/download")
+    public ResponseEntity<Resource> download(@RequestParam String fileName) {
+        Resource resource = fileUtil.load(fileName, this.downPath);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .body(resource);
+    }
 }

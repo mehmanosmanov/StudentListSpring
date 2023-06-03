@@ -17,11 +17,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -34,8 +36,8 @@ public class StudentServiceImpl implements StudentService {
 //    private String download_path;
 //    @Value("${upload.directory}")
 //    private String upload_path;
-    private final Path upPath = Paths.get("D:\\java\\project_files\\upload_from");
-    private final Path downPath = Paths.get("D:\\java\\project_files");
+    private final Path upPath = Paths.get("/media/mehman/C0C01276C0127340/JAVA/project_files/upload_to");
+    private final Path downPath = Paths.get("/media/mehman/C0C01276C0127340/JAVA/project_files/download_from");
     private final FileUtil fileUtil;
 
     @Override
@@ -101,8 +103,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public void saveFile(MultipartFile file) throws IOException {
-        file.transferTo(downPath);
-        Files.copy(file.getInputStream(), this.upPath.resolve(file.getOriginalFilename()));
+        Files.copy(file.getInputStream(),
+                this.upPath.resolve(Objects.requireNonNull(file.getOriginalFilename())));
     }
 
     public ResponseEntity<Resource> getFileByStudentId(String fileName) {
