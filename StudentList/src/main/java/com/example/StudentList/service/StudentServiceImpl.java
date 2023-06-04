@@ -10,6 +10,7 @@ import com.example.StudentList.repository.StudentRepository;
 import com.example.StudentList.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,12 +32,9 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final StudentConvertor studentConvertor;
-    //        @Value("${download.directory}")
-//    private String download_path;
-//    @Value("${upload.directory}")
-//    private String upload_path;
-    private final Path upPath = Paths.get("/media/mehman/C0C01276C0127340/JAVA/project_files/upload_to");
-    private final Path downPath = Paths.get("/media/mehman/C0C01276C0127340/JAVA/project_files/download_from");
+    //    @Value("${file.directory.path}")
+//    private String path;
+    private final Path path1 = Paths.get("/media/mehman/C0C01276C0127340/JAVA/project_files/upload_to");
     private final FileUtil fileUtil;
 
     @Override
@@ -68,7 +65,7 @@ public class StudentServiceImpl implements StudentService {
         log.info("Checking of {} id student", id);
         Student student = studentRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Not found student with such id=" + id));
-        getFileByStudentId(student.getImage());
+        getFile(student.getImage());
         log.info("{} id student found", id);
         return studentConvertor.convertToStudentDto(student);
     }
@@ -82,6 +79,7 @@ public class StudentServiceImpl implements StudentService {
         oldStudent.setSurname(studentRequest.getSurname());
         oldStudent.setAge(studentRequest.getAge());
         oldStudent.setClass_no(studentRequest.getClass_no());
+        studentRepository.save(oldStudent);
         log.info("{} id student is updated", id);
         return "Student with id=" + id + " successfully updated ";
     }
@@ -99,16 +97,16 @@ public class StudentServiceImpl implements StudentService {
     public ResponseEntity<Resource> getStudentImage(Long id) {
         Student student = studentRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Not found student with such id=" + id));
-        return getFileByStudentId(student.getImage());
+        return getFile(student.getImage());
     }
 
     public void saveFile(MultipartFile file) throws IOException {
         Files.copy(file.getInputStream(),
-                this.upPath.resolve(Objects.requireNonNull(file.getOriginalFilename())));
+                this.path1.resolve(Objects.requireNonNull(file.getOriginalFilename())));
     }
 
-    public ResponseEntity<Resource> getFileByStudentId(String fileName) {
-        Resource resource = fileUtil.load(fileName, this.downPath);
+    public ResponseEntity<Resource> getFile(String fileName) {
+        Resource resource = fileUtil.load(fileName, this.path1);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
                 .body(resource);
