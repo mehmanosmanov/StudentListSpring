@@ -15,7 +15,6 @@ public class StudentConvertor {
                 .surname(studentRequest.getSurname())
                 .class_no(studentRequest.getClass_no())
                 .age(studentRequest.getAge()).build();
-
     }
 
     public StudentResponse convertToStudentDto(Student student) {

@@ -3,8 +3,6 @@ package com.example.StudentList.controller;
 import com.example.StudentList.dto.request.StudentRequest;
 import com.example.StudentList.dto.response.StudentResponse;
 import com.example.StudentList.service.StudentService;
-import com.example.StudentList.service.StudentServiceImpl;
-import com.example.StudentList.util.FileUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -12,7 +10,6 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +26,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class StudentController {
-    //    private final StudentService studentService;
     private final StudentService studentService;
 //    private final FileUtil fileUtil;
 //    private final Path upPath = Paths.get("/media/mehman/C0C01276C0127340/JAVA/project_files/upload_from/");

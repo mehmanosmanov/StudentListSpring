@@ -38,11 +38,12 @@ public class StudentServiceImpl implements StudentService {
     private final FileUtil fileUtil;
 
     @Override
-    public String saveStudent(StudentRequest request, MultipartFile image) throws IOException {
+    public String saveStudent(StudentRequest request, MultipartFile file) throws IOException {
         log.info("Starting to save a new student");
         if (request.getAge() < 16) throw new AgeLimitException();
-        saveFile(image);
-        Student student = studentConvertor.convertToStudent(request, image.getOriginalFilename());
+        Files.copy(file.getInputStream(),
+                this.path1.resolve(Objects.requireNonNull(file.getOriginalFilename())));
+        Student student = studentConvertor.convertToStudent(request, file.getOriginalFilename());
         studentRepository.save(student);
         log.info("New student saved {}", request);
         return "Student saved successfully";
@@ -98,11 +99,6 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Not found student with such id=" + id));
         return getFile(student.getImage());
-    }
-
-    public void saveFile(MultipartFile file) throws IOException {
-        Files.copy(file.getInputStream(),
-                this.path1.resolve(Objects.requireNonNull(file.getOriginalFilename())));
     }
 
     public ResponseEntity<Resource> getFile(String fileName) {
