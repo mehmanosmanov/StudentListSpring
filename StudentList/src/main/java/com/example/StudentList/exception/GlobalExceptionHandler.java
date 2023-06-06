@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(AgeLimitException.class)
-    ResponseEntity<ErrorMessage> handleException(AgeLimitException ex) {
+    ResponseEntity<ErrorMessage> handleAgeLimitException(AgeLimitException ex) {
         log.info(ex.getMessage(), ex);
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setDate(LocalDateTime.now());
@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    ResponseEntity<ErrorMessage> handleException(NotFoundException ex) {
+    ResponseEntity<ErrorMessage> handleNotFoundException(NotFoundException ex) {
         log.info(ex.getMessage(), ex);
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setDate(LocalDateTime.now());
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(StudentAlreadyExistsException.class)
-    ResponseEntity<ErrorMessage> handleException(StudentAlreadyExistsException ex) {
+    ResponseEntity<ErrorMessage> handleStudentAlreadyExistsException(StudentAlreadyExistsException ex) {
         log.info(ex.getMessage(), ex);
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setDate(LocalDateTime.now());
