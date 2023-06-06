@@ -27,9 +27,6 @@ import java.util.List;
 @Slf4j
 public class StudentController {
     private final StudentService studentService;
-//    private final FileUtil fileUtil;
-//    private final Path upPath = Paths.get("/media/mehman/C0C01276C0127340/JAVA/project_files/upload_from/");
-//    private final Path downPath = Paths.get("/media/mehman/C0C01276C0127340/JAVA/project_files/download_to/");
 
     @ApiOperation(value = "Add student", notes = "Adding a new student to the DB.")
     @PostMapping("/create")
@@ -77,19 +74,4 @@ public class StudentController {
     public ResponseEntity<Resource> getStudentImageById(@RequestParam Long id) {
         return studentService.getStudentImage(id);
     }
-
-//        @PostMapping("/upload")
-//    public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-//        log.info("size:{}", file.getSize());
-//        log.info("File name:{}", file.getOriginalFilename());
-//            Files.copy(file.getInputStream(), this.upPath.resolve(file.getOriginalFilename()));
-//    }
-////
-//    @GetMapping("/download")
-//    public ResponseEntity<Resource> download(@RequestParam String fileName) {
-//        Resource resource = fileUtil.load(fileName, this.downPath);
-//        return ResponseEntity.ok()
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
-//                .body(resource);
-//    }
 }
