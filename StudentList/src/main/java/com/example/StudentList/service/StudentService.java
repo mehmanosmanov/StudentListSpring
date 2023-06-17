@@ -1,6 +1,7 @@
 package com.example.StudentList.service;
 
 import com.example.StudentList.dto.request.StudentRequest;
+import com.example.StudentList.dto.response.StudentGroupResponse;
 import com.example.StudentList.dto.response.StudentResponse;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +15,15 @@ import java.util.List;
 @Service
 public interface StudentService {
 
-    String saveStudent(StudentRequest studentRequest, MultipartFile file) throws IOException;
+    String saveStudentAllData(StudentRequest request);
 
     StudentResponse getById(Long id);
 
-    List<StudentResponse> getAll();
+    ResponseEntity<List<StudentGroupResponse>> getAll();
 
     ResponseEntity<Resource> getStudentImage(Long id);
 
-    String update(StudentRequest studentRequest, Long id, String image);
+    String update(StudentRequest studentRequest, Long id, MultipartFile image) throws IOException;
 
     String deleteById(Long id);
 

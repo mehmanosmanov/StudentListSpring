@@ -1,34 +1,46 @@
 package com.example.StudentList.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
+@Setter
+@Getter
 @Table(name = "students")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
-    @Column(length = 10)
-    private String class_no;
+
     @Column(name = "first_name", length = 55)
     private String name;
     @Column(name = "last_name", length = 55)
     private String surname;
+
     private Integer age;
-    @Column(length = 55)
-    private String image;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_info_id")
+    private StudentInfo studentInfo;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_id")
+    private StudentGroup studentGroup;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "teachers_students",
+            joinColumns = {@JoinColumn(name = "student_id")},
+            inverseJoinColumns = {@JoinColumn(name = "teacher_id")})
+    private Set<Teacher> teachers = new HashSet<>();
+
+    public void setStudentGroup(StudentGroup studentGroup) {
+        this.studentGroup = studentGroup;
+        studentGroup.getStudents().add(this);
+    }
 }
-
-
-
-
-

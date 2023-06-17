@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20230617-10
+      author: Mehman Osmanov
+      changes:
+        - createTable:
+            tableName: user_details
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+#                    primaryKeyName: user_pkey
+              - column:
+                  name: username
+                  type: varchar(55)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(55)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(55)
+                  constraints:
+                    nullable: false
