@@ -1,6 +1,5 @@
 package com.example.StudentList.dto.response;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 

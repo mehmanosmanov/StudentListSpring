@@ -3,7 +3,6 @@ package com.example.StudentList.service;
 import com.example.StudentList.dto.request.AccountBalanceRequest;
 import com.example.StudentList.entity.AccountBalance;
 import com.example.StudentList.repository.AccountBalanceRepository;
-import io.swagger.v3.oas.annotations.servers.Server;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

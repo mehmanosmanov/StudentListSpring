@@ -1,10 +1,7 @@
 package com.example.StudentList.dto.request;
 
-import com.example.StudentList.entity.Teacher;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
-import org.mapstruct.Mapping;
 
 import javax.validation.constraints.*;
 

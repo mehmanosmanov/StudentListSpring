@@ -3,7 +3,6 @@ package com.example.StudentList.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 
 @Entity
 @Table(name = "users")

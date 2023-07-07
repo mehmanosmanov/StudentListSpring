@@ -1,10 +1,8 @@
 package com.example.StudentList.dto.response;
 
-import com.example.StudentList.entity.StudentInfo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

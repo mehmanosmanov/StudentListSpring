@@ -6,7 +6,6 @@ import com.example.StudentList.dto.response.TeacherResponse;
 import com.example.StudentList.entity.Teacher;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface TeacherMapper {
