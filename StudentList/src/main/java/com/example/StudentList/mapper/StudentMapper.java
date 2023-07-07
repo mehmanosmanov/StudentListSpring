@@ -9,6 +9,10 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
+
+  @Mapping(source ="phoneNumber", target = "studentInfo.phoneNumber")
+  @Mapping(source ="address", target = "studentInfo.address")
+  @Mapping(source ="email", target = "studentInfo.email")
   Student dtoToStudent(StudentRequest request);
 
   @Mapping(target ="studentInfo" ,source = "studentInfo" )

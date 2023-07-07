@@ -3,10 +3,9 @@ package com.example.StudentList.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import java.util.*;
 
 @Entity
 @Setter
@@ -15,18 +14,20 @@ import java.util.Set;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
+    private Long id;
 
+    @NotEmpty
     @Column(name = "first_name", length = 55)
     private String name;
+    @NotEmpty
     @Column(name = "last_name", length = 55)
     private String surname;
-
+    @Min(17)
     private Integer age;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "student_info_id")
-    private StudentInfo studentInfo;
+    private StudentInfo studentInfo = new StudentInfo();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_id")

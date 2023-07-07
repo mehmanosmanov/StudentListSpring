@@ -6,6 +6,7 @@ import com.example.StudentList.dto.response.StudentGroupResponse;
 import com.example.StudentList.dto.response.StudentResponse;
 import com.example.StudentList.entity.StudentGroup;
 import com.example.StudentList.repository.GroupRepository;
+import com.example.StudentList.service.StudentService;
 import com.example.StudentList.service.StudentServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -27,17 +28,17 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class StudentController {
-  private final StudentServiceImpl studentService;
+  private final StudentService studentService;
 
   @ApiOperation(value = "Add student", notes = "Adding a new student to the DB.")
   @PostMapping("/saveData")
-  public void createDemo(@RequestBody StudentRequest request) throws IOException {
-    studentService.saveStudentAllData(request);
+  public void createDemo(StudentRequest request,@RequestBody MultipartFile file) throws IOException {
+    studentService.saveStudentAllData(request, file);
   }
 
   @PostMapping("/save")
   public String save(@RequestBody StudentRequest request) {
-    return studentService.save(request);
+    return studentService.saveStudent(request);
   }
 
   @ApiOperation(value = "Get student", notes = "Get student by entered ID")
@@ -56,7 +57,7 @@ public class StudentController {
   @ApiOperation(value = "Get students", notes = "Getting all saved students from DB")
   @GetMapping("/students")
   public ResponseEntity<List<StudentGroupResponse>> getAllStudents() {
-    return studentService.getAll();
+    return ResponseEntity.ok(studentService.getAll());
   }
 
   @ApiOperation(value = "Update by ID", notes = "Update student by entered ID ")
@@ -76,17 +77,7 @@ public class StudentController {
 
   @GetMapping("/image")
   public ResponseEntity<Resource> getStudentImageById(@RequestParam Long id) {
-    return studentService.getStudentImage(id);
-  }
-
-  @PatchMapping("/transaction")
-  String cardToCard(@RequestParam Long from, @RequestParam Long to, @RequestParam Double amount) {
-    return studentService.transaction(from, to, amount);
-  }
-
-  @PostMapping("/newAccount")
-  public void createNewAccount(@RequestBody AccountBalanceRequest request) {
-    studentService.creatBalanceAccount(request);
+    return ResponseEntity.ok(studentService.getStudentImage(id));
   }
 
 }

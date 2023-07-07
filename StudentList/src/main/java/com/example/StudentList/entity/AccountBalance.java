@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Setter
@@ -16,7 +17,8 @@ public class AccountBalance {
   private String name;
   @Column(nullable = false, length = 50)
   private String surName;
-  @Column(nullable = false, length = 20)
+  @Size
+  @Column(nullable = false)
   private Long accountNum;
   private Double balance;
 

@@ -8,5 +8,6 @@ import lombok.Setter;
 @Getter
 public class StudentInfoResponse {
     private String phoneNumber;
+    private String email;
     private String address;
 }

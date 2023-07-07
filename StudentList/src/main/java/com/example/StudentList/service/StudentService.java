@@ -15,13 +15,17 @@ import java.util.List;
 @Service
 public interface StudentService {
 
-    String saveStudentAllData(StudentRequest request);
+    String saveStudentAllData(StudentRequest request, MultipartFile file) throws IOException;
+
+    String saveStudent(StudentRequest request);
 
     StudentResponse getById(Long id);
 
-    ResponseEntity<List<StudentGroupResponse>> getAll();
+    List<StudentResponse> getByName(String name);
 
-    ResponseEntity<Resource> getStudentImage(Long id);
+    List<StudentGroupResponse> getAll();
+
+    Resource getStudentImage(Long id);
 
     String update(StudentRequest studentRequest, Long id, MultipartFile image) throws IOException;
 

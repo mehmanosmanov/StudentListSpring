@@ -3,6 +3,7 @@ package com.example.StudentList.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Entity
 @Table(name = "student_info")
@@ -19,6 +20,8 @@ public class StudentInfo {
     private String phoneNumber;
     @Column(length = 25)
     private String address;
+    @Column(length = 25)
+    private String email;
     @Column(length = 55)
     private String image;
 }
