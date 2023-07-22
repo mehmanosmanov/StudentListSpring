@@ -1,0 +1,6 @@
+
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¾à“Àûÿÿÿÿ8¼´½”1
+Q
+java:S2201"/The return value of "orElseThrow" must be used.(Éå°³ıÿÿÿÿ8İ´½”1
+e
+java:S1128"CRemove this unused import 'org.aspectj.weaver.bcel.FakeAnnotation'.(Ë¡—Äüÿÿÿÿ8á´½”1
