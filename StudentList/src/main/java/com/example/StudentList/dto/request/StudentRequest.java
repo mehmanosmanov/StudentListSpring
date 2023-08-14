@@ -8,6 +8,7 @@ import javax.validation.constraints.*;
 @Setter
 @Getter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentRequest {

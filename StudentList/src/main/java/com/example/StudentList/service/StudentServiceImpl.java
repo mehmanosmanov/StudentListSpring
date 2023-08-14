@@ -24,11 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -41,27 +40,26 @@ public class StudentServiceImpl implements StudentService {
    private final StudentMapper studentMapper;
    private final TeacherMapper teacherMapper;
 
-
+   /**
+    * Solved the file transformation problem
+    **/
    @Value("${file.directory}")
-   private String path;
+   private String rootPath;
+   private Path path;
 
-   private Path path1;
-   private final FileUtil fileUtil;
-
-   //Solved the problem
    @PostConstruct
    public void init() {
-      path1 = Paths.get(path);
+      path = Paths.get(rootPath);
    }
 
-   private final File root = new File("D:\\JAVA\\project_files\\files");
+   private final FileUtil fileUtil;
+
 
    @Override
    public String saveStudentAllData(StudentRequest request, MultipartFile file) throws IOException {
       final Student student = studentMapper.dtoToStudent(request);
-//        Files.copy(file.getInputStream(),
-//                this.path1.resolve(Objects.requireNonNull(file.getOriginalFilename())));
-
+      Files.copy(file.getInputStream(), path.resolve(UUID.randomUUID().toString().substring(0, 5) + "-" + file.getOriginalFilename()));
+      student.getStudentInfo().setImage(file.getOriginalFilename());
       //checking if the group already has
       Optional<StudentGroup> studentGroup = groupRepository.findByNameAndNumber(request.getGroupName(), request.getGroupNumber());
       if (studentGroup.isEmpty()) {
@@ -161,7 +159,8 @@ public class StudentServiceImpl implements StudentService {
    }
 
    public ResponseEntity<Resource> getFile(String fileName) {
-      Resource resource = fileUtil.load(fileName, this.path1);
+      Resource resource = fileUtil.load(fileName, this.path);
       return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"").body(resource);
    }
+
 }

@@ -25,9 +25,9 @@ public class StudentGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty
+//    @NotEmpty
     private String name;
-    @NotEmpty
+//    @NotEmpty
     private String number;
 
     @OneToMany(mappedBy = "studentGroup")

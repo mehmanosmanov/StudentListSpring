@@ -60,9 +60,7 @@ public class SecurityConfig {
                     .antMatchers("/web/")
                     .permitAll()
                     .antMatchers("/auth/login","/auth/register")
-                    .permitAll()
-                .anyRequest()
-                    .authenticated();
+                    .permitAll();
 //                .and()
 //                .logout()
 //                .logoutUrl("/web/logout")
