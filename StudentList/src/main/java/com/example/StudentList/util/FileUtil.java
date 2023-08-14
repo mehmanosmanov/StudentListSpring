@@ -1,5 +1,6 @@
 package com.example.StudentList.util;
 
+import com.example.StudentList.exception.NotFoundException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class FileUtil {
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
-                throw new RuntimeException("Could not read the file!");
+                throw new NotFoundException("Could not read the file!");
             }
         } catch (MalformedURLException e) {
             throw new RuntimeException("Error: " + e.getMessage());

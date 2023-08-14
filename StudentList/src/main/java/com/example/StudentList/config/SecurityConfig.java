@@ -50,6 +50,9 @@ public class SecurityConfig {
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .logout()
+                .logoutUrl("/logout")
+                .and()
                 .httpBasic().and().csrf().disable()
                 .authorizeRequests()
                     .antMatchers("/student/students", "/student/saveData")
@@ -57,9 +60,7 @@ public class SecurityConfig {
                     .antMatchers("/web/")
                     .permitAll()
                     .antMatchers("/auth/login","/auth/register")
-                    .permitAll()
-                .anyRequest()
-                    .authenticated();
+                    .permitAll();
 //                .and()
 //                .logout()
 //                .logoutUrl("/web/logout")

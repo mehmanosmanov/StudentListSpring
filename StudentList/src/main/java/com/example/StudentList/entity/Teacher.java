@@ -21,11 +21,11 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+//    @NotEmpty
     private String name;
-    @NotEmpty
+//    @NotEmpty
     private String surName;
-    @Min(22)
+//    @Min(22)
     private int age;
 
     @ManyToMany(mappedBy = "teachers")

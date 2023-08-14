@@ -12,10 +12,8 @@ import java.util.Optional;
 @Repository
 public interface GroupRepository extends JpaRepository<StudentGroup, Long> {
 
-    @EntityGraph(type = EntityGraphType.FETCH, attributePaths = {"students", "students.studentInfo", "students.teachers"})
-    List<StudentGroup> findAll();
+   @EntityGraph(type = EntityGraphType.FETCH, attributePaths = {"students", "students.studentInfo", "students.teachers"})
+   List<StudentGroup> findAll();
 
-    Optional<StudentGroup> findByNameAndNumber(String name, String number);
-
-
+   Optional<StudentGroup> findByNameAndNumber(String name, String number);
 }
