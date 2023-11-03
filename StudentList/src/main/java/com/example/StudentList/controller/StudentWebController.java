@@ -1,8 +1,8 @@
 package com.example.StudentList.controller;
 
-import com.example.StudentList.dto.request.RegisterDto;
-import com.example.StudentList.dto.response.StudentResponse;
-import com.example.StudentList.entity.Student;
+import com.example.StudentList.model.dto.request.RegisterDto;
+import com.example.StudentList.model.dto.response.StudentResponse;
+import com.example.StudentList.model.entity.Student;
 import com.example.StudentList.service.AuthService;
 import com.example.StudentList.service.StudentServiceWeb;
 import lombok.RequiredArgsConstructor;

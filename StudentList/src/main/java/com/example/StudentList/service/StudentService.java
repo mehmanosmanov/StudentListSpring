@@ -1,8 +1,8 @@
 package com.example.StudentList.service;
 
-import com.example.StudentList.dto.request.StudentRequest;
-import com.example.StudentList.dto.response.StudentGroupResponse;
-import com.example.StudentList.dto.response.StudentResponse;
+import com.example.StudentList.model.dto.request.StudentRequest;
+import com.example.StudentList.model.dto.response.StudentGroupResponse;
+import com.example.StudentList.model.dto.response.StudentResponse;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

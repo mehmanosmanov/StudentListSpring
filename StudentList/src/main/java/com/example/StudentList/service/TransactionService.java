@@ -1,7 +1,7 @@
 package com.example.StudentList.service;
 
-import com.example.StudentList.dto.request.AccountBalanceRequest;
-import com.example.StudentList.entity.AccountBalance;
+import com.example.StudentList.model.dto.request.AccountBalanceRequest;
+import com.example.StudentList.model.entity.AccountBalance;
 import com.example.StudentList.repository.AccountBalanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

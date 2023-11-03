@@ -1,6 +1,6 @@
 package com.example.StudentList.exception;
 
-import com.example.StudentList.dto.response.ErrorMessage;
+import com.example.StudentList.model.dto.response.ErrorMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

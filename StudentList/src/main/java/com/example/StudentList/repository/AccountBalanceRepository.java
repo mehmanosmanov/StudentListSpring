@@ -1,10 +1,9 @@
 package com.example.StudentList.repository;
 
-import com.example.StudentList.entity.AccountBalance;
+import com.example.StudentList.model.entity.AccountBalance;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 public interface AccountBalanceRepository extends JpaRepository<AccountBalance, Long> {
   @Modifying

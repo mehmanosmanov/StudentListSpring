@@ -1,9 +1,9 @@
 package com.example.StudentList.mapper;
 
 
-import com.example.StudentList.dto.request.StudentRequest;
-import com.example.StudentList.dto.response.StudentResponse;
-import com.example.StudentList.entity.Student;
+import com.example.StudentList.model.dto.request.StudentRequest;
+import com.example.StudentList.model.dto.response.StudentResponse;
+import com.example.StudentList.model.entity.Student;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

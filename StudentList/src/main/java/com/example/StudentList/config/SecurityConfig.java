@@ -55,12 +55,8 @@ public class SecurityConfig {
                 .and()
                 .httpBasic().and().csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/student/students", "/student/saveData")
-                    .permitAll()
-                    .antMatchers("/web/")
-                    .permitAll()
-                    .antMatchers("/auth/login","/auth/register")
-                    .permitAll();
+                    .antMatchers("/student/students", "/student/saveData").permitAll()
+                    .antMatchers("/web/","/auth/login","/auth/register").permitAll();
 //                .and()
 //                .logout()
 //                .logoutUrl("/web/logout")

@@ -1,8 +1,8 @@
 package com.example.StudentList.controller;
 
-import com.example.StudentList.dto.request.StudentRequest;
-import com.example.StudentList.dto.response.StudentGroupResponse;
-import com.example.StudentList.dto.response.StudentResponse;
+import com.example.StudentList.model.dto.request.StudentRequest;
+import com.example.StudentList.model.dto.response.StudentGroupResponse;
+import com.example.StudentList.model.dto.response.StudentResponse;
 import com.example.StudentList.service.StudentService;
 import com.example.StudentList.util.FileUtil;
 import io.swagger.annotations.ApiOperation;
@@ -19,11 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/student")

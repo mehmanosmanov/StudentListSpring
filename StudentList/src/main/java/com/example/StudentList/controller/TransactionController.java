@@ -1,6 +1,6 @@
 package com.example.StudentList.controller;
 
-import com.example.StudentList.dto.request.AccountBalanceRequest;
+import com.example.StudentList.model.dto.request.AccountBalanceRequest;
 import com.example.StudentList.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

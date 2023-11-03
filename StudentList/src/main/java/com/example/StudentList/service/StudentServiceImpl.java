@@ -1,13 +1,15 @@
 package com.example.StudentList.service;
 
-import com.example.StudentList.dto.request.StudentRequest;
-import com.example.StudentList.dto.response.StudentGroupResponse;
-import com.example.StudentList.dto.response.StudentResponse;
-import com.example.StudentList.entity.*;
+import com.example.StudentList.model.dto.request.StudentRequest;
+import com.example.StudentList.model.dto.response.StudentGroupResponse;
+import com.example.StudentList.model.dto.response.StudentResponse;
 import com.example.StudentList.exception.AgeLimitException;
 import com.example.StudentList.exception.NotFoundException;
 import com.example.StudentList.mapper.StudentMapper;
 import com.example.StudentList.mapper.TeacherMapper;
+import com.example.StudentList.model.entity.Student;
+import com.example.StudentList.model.entity.StudentGroup;
+import com.example.StudentList.model.entity.Teacher;
 import com.example.StudentList.repository.GroupRepository;
 import com.example.StudentList.repository.StudentRepository;
 import com.example.StudentList.repository.TeacherRepository;
@@ -22,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

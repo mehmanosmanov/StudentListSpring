@@ -1,7 +1,7 @@
 package com.example.StudentList.repository;
 
 
-import com.example.StudentList.entity.Teacher;
+import com.example.StudentList.model.entity.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.validation.constraints.NotEmpty;

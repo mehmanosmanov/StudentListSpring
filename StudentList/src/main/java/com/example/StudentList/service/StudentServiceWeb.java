@@ -1,7 +1,7 @@
 package com.example.StudentList.service;
 
-import com.example.StudentList.dto.response.StudentResponse;
-import com.example.StudentList.entity.Student;
+import com.example.StudentList.model.dto.response.StudentResponse;
+import com.example.StudentList.model.entity.Student;
 import com.example.StudentList.mapper.StudentMapper;
 import com.example.StudentList.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;

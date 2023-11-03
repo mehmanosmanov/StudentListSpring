@@ -1,6 +1,6 @@
 package com.example.StudentList.service;
 
-import com.example.StudentList.entity.User;
+import com.example.StudentList.model.entity.User;
 import com.example.StudentList.repository.UserRepository;
 import com.example.StudentList.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
